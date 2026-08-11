@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Layer 1 — Primitives. Raw values. No component may reference these directly.
+   --------------------------------------------------------------------------- */
+:root {
+  --teal-800: #006a6a;
+  --teal-500: #0ea5a5;
+  --teal-300: #71d6d6;
+  --teal-100: #d3f0ef;
+
+  --amber-800: #8a5100;
+  --amber-500: #e08a1e;
+  --amber-300: #ffb876;
+  --amber-100: #fbebd4;
+
+  --portal: #97ce4c;
+
+  --ink-900: #0e1116;
+  --ink-800: #161b22;
+  --ink-750: #1b222b;
+  --ink-700: #242b35;
+  --ink-500: #5b6675;
+  --ink-400: #8b95a5;
+  --ink-300: #6b7686;
+  --ink-200: #dce1e7;
+  --ink-100: #f2f4f6;
+  --ink-000: #ffffff;
+
+  --alive: #2e9e5b;
+  --dead: #c2413c;
+  --unknown: #7a8797;
+}
+
+/* ---------------------------------------------------------------------------
+   Layer 2 — Semantics, light theme. Named by the job they do.
+   Components only ever reference this layer.
+   --------------------------------------------------------------------------- */
+:root {
+  --canvas: var(--ink-100);
+  --panel: var(--ink-000);
+  --panel-sunken: var(--ink-100);
+  --hairline: var(--ink-200);
+
+  --text: var(--ink-900);
+  --text-muted: var(--ink-500);
+  --text-faint: var(--ink-400);
+
+  /* Strokes, fills, bars, rings. Never glyphs — see the contrast table below. */
+  --slot-1: var(--teal-500);
+  --slot-2: var(--amber-500);
+  /* Glyphs. The only tokens valid for text in a slot colour. */
+  --slot-1-text: var(--teal-800);
+  --slot-2-text: var(--amber-800);
+  --slot-1-wash: var(--teal-100);
+  --slot-2-wash: var(--amber-100);
+
+  /* Named by tone, not by meaning: a primitive must not know what "alive" is. */
+  --tone-positive: var(--alive);
+  --tone-negative: var(--dead);
+  --tone-neutral: var(--unknown);
+
+  --accent-portal: var(--portal);
+  --focus-ring: var(--ink-900);
+  --scrim: rgb(14 17 22 / 0.72);
+}
+
+/*
+  Dark theme re-points the same semantic names. If adding dark mode ever requires
+  touching a component, the tokens are wrong.
+
+  On a light canvas the identity colours fail AA as text (#0EA5A5 → 3.03:1,
+  #E08A1E → 2.69:1), which is why -text exists and darkens them. On a dark canvas
+  the relationship inverts: the lighter tints are the readable ones.
+*/
+.dark {
+  --canvas: var(--ink-900);
+  --panel: var(--ink-800);
+  --panel-sunken: var(--ink-750);
+  --hairline: var(--ink-700);
+
+  --text: #e6eaf0;
+  --text-muted: var(--ink-400);
+  --text-faint: var(--ink-300);
+
+  --slot-1: var(--teal-300);
+  --slot-2: var(--amber-300);
+  --slot-1-text: var(--teal-300);
+  --slot-2-text: var(--amber-300);
+  --slot-1-wash: rgb(14 165 165 / 0.14);
+  --slot-2-wash: rgb(224 138 30 / 0.16);
+
+  --focus-ring: #e6eaf0;
+  --scrim: rgb(0 0 0 / 0.72);
+}
+
+/* ---------------------------------------------------------------------------
+   Layer 3 — Token bridge. `inline` keeps the var() reference in the generated
+   utility, so overriding a semantic var in .dark re-themes every utility.
+   --------------------------------------------------------------------------- */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-panel-sunken: var(--panel-sunken);
+  --color-hairline: var(--hairline);
+
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+
+  --color-slot-1: var(--slot-1);
+  --color-slot-2: var(--slot-2);
+  --color-slot-1-text: var(--slot-1-text);
+  --color-slot-2-text: var(--slot-2-text);
+  --color-slot-1-wash: var(--slot-1-wash);
+  --color-slot-2-wash: var(--slot-2-wash);
+
+  --color-tone-positive: var(--tone-positive);
+  --color-tone-negative: var(--tone-negative);
+  --color-tone-neutral: var(--tone-neutral);
+
+  --color-accent-portal: var(--accent-portal);
+  --color-focus-ring: var(--focus-ring);
+  --color-scrim: var(--scrim);
+
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-archivo);
+  --font-mono: var(--font-ibm-plex-mono);
+
+  --radius-card: 10px;
+  --radius-panel: 14px;
+  --radius-input: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+   Type scale. Declared as utilities so the scale is the only way to set type:
+   ad-hoc font sizes in components are a smell, not an option.
+   Display and body share one variable font; the contrast comes from the width
+   axis, which costs no extra network request.
+   --------------------------------------------------------------------------- */
+@utility type-display-lg {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  font-stretch: 125%;
+  letter-spacing: -0.02em;
+}
+
+@utility type-display-md {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  font-stretch: 125%;
+  letter-spacing: -0.01em;
+}
+
+@utility type-body-lg {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
+
+@utility type-body {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
+  font-weight: 400;
+}
+
+@utility type-body-sm {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+@utility type-mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility type-mono-data {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-text);
+    font-family: var(--font-body);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Chrome draws its own clear button on focus, which doubles up with ours. */
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  /* Tailwind v4 no longer sets this on buttons, and every button here is clickable. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
