@@ -109,7 +109,7 @@ export function EpisodeComparison() {
       <EpisodePanel
         section="first"
         id="episodes-first"
-        title="Character #1 only"
+        title="Character #1 - Only Episodes"
         count={counts.onlyInFirst}
         episodes={onlyInFirst}
         isLoading={isLoading}
@@ -125,7 +125,7 @@ export function EpisodeComparison() {
       <EpisodePanel
         section="shared"
         id="episodes-shared"
-        title="Shared episodes"
+        title="Character #1 & Character #2 - Shared Episodes"
         count={counts.sharedByBoth}
         episodes={sharedByBoth}
         isLoading={isLoading}
@@ -140,7 +140,7 @@ export function EpisodeComparison() {
       <EpisodePanel
         section="second"
         id="episodes-second"
-        title="Character #2 only"
+        title="Character #2 - Only Episodes"
         count={counts.onlyInSecond}
         episodes={onlyInSecond}
         isLoading={isLoading}

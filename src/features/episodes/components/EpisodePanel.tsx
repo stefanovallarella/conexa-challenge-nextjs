@@ -9,7 +9,7 @@ type EpisodeSection = NonNullable<EpisodeRowProps["section"]>;
 
 const SKELETON_ROW_COUNT = 5;
 
-const headingStyles = cva("type-mono-label", {
+const headingStyles = cva("type-mono-label min-h-8 content-center", {
   variants: {
     section: {
       first: "text-slot-1-text",
@@ -70,7 +70,7 @@ export function EpisodePanel({
 }: EpisodePanelProps) {
   return (
     <Panel id={id} aria-labelledby={`${id}-heading`} className="scroll-mt-4">
-      <header className="flex items-baseline justify-between gap-2 border-b border-hairline px-3 py-3">
+      <header className="flex items-center justify-between gap-2 border-b border-hairline px-3 py-3">
         <h3 id={`${id}-heading`} className={cn(headingStyles({ section: body.section }))}>
           {title}
         </h3>

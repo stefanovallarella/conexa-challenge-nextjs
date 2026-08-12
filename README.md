@@ -109,8 +109,9 @@ onlyA = A \ B      shared = A ∩ B      onlyB = B \ A
 ```
 
 Los episodios se piden con `GET /episode/1,2,3`, así que una sola llamada con la unión
-de ambos conjuntos nos sirve para poblar las tres columnas. Los contadores del diagrama son inmediatos
-por el mismo motivo: salen de los IDs, sin esperar a que lleguen los episodios. (ya están cargados).
+de ambos conjuntos nos sirve para poblar las tres columnas. Los contadores del diagrama
+son inmediatos por el mismo motivo: salen de los IDs, sin esperar a que lleguen los
+episodios.
 
 ### Compartir una comparación por URL
 
