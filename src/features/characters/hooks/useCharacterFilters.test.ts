@@ -3,10 +3,7 @@ import { describe, expect, it } from "vitest";
 import { useCharacterFilters } from "./useCharacterFilters";
 
 describe("character panel filters", () => {
-  /**
-   * Without this, somebody on page 12 who then searches lands on page 12 of a
-   * result set that may only have one page, and sees nothing.
-   */
+  // Otherwise a reader on page 12 who searches lands on an empty page 12.
   it("returns to the first page whenever the results are narrowed", () => {
     const { result } = renderHook(() => useCharacterFilters());
 

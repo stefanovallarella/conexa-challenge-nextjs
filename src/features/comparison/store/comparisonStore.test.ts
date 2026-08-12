@@ -18,10 +18,7 @@ describe("comparison store", () => {
     expect(store.getState().slots["1"]).toBeNull();
   });
 
-  /**
-   * On the server one instance per request is what keeps a visitor's selection
-   * out of another visitor's render.
-   */
+  // On the server, a shared instance would leak one visitor's selection to another.
   it("keeps instances independent of each other", () => {
     const firstStore = createComparisonStore();
     const secondStore = createComparisonStore();

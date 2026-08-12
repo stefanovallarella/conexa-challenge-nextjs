@@ -16,7 +16,6 @@ function buildCharacter(id: number, episodeIds: number[]): Character {
   };
 }
 
-/** Stands in for the server prefetch that a shared link arrives with. */
 function seedSelectedCharacters(
   queryClient: ReturnType<typeof createAppWrapper>["queryClient"],
 ) {
@@ -31,10 +30,7 @@ function seedSelectedCharacters(
 }
 
 describe("useComparedEpisodes", () => {
-  /**
-   * The requirement stated literally in the brief: the three sections show
-   * nothing until a character is picked in both panels.
-   */
+  // The brief asks for this literally: nothing shows until both panels have a pick.
   it("stays empty and asks for nothing while a slot is unfilled", async () => {
     const { wrapper } = createAppWrapper({ initialSlots: { "1": 1, "2": null } });
     const fetchSpy = vi.spyOn(globalThis, "fetch");
@@ -69,10 +65,8 @@ describe("useComparedEpisodes", () => {
     expect(result.current.onlyInSecond.map((e) => e.id)).toEqual([4, 5]);
   });
 
-  /**
-   * A refactor that fetched per section would still render correctly, which is
-   * exactly why the guarantee needs pinning down.
-   */
+  // Fetching one request per section would still look right on screen, so only a
+  // test can catch it.
   it("serves all three sections with a single request", async () => {
     const { wrapper, queryClient } = createAppWrapper({
       initialSlots: { "1": 1, "2": 2 },

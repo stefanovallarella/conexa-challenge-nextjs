@@ -3,9 +3,6 @@ export const API_BASE_URL = "https://rickandmortyapi.com/api";
 /** The dataset is immutable; this only bounds how long a deployment stays pinned. */
 export const API_REVALIDATE_SECONDS = 3600;
 
-/** Fixed by the API — it always returns up to 20 documents per page. */
-export const CHARACTERS_PER_PAGE = 20;
-
 export const SEARCH_DEBOUNCE_MS = 300;
 
 export const SLOT_IDS = ["1", "2"] as const;

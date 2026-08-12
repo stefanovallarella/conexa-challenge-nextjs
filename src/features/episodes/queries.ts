@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { fetchEpisodesByIds } from "./services/episodes.service";
 
-export const episodeKeys = {
+const episodeKeys = {
   all: ["episodes"] as const,
   batch: (episodeIds: readonly number[]) =>
     [...episodeKeys.all, "batch", episodeIds] as const,

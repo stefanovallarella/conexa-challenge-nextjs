@@ -15,10 +15,6 @@ const RICK: Character = {
 };
 
 describe("resolving the selected characters", () => {
-  /**
-   * Picking somebody already visible on screen must not cost a request: their
-   * data is in the page cache the reader is looking at.
-   */
   it("reuses a character already loaded in a page instead of refetching", async () => {
     const { wrapper, queryClient } = createAppWrapper({
       initialSlots: { "1": 1, "2": null },

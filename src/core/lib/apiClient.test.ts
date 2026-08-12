@@ -12,18 +12,14 @@ import {
 const probeSchema = z.object({ id: z.number() });
 
 describe("apiClient", () => {
-  /** Batch endpoints answer with a bare object when asked for a single id. */
   it("reads a single-item batch response as a collection", () => {
     expect(collectionResponseSchema(probeSchema).parse({ id: 7 })).toEqual([
       { id: 7 },
     ]);
   });
 
-  /**
-   * If this guard regresses, every unfiltered request goes out as
-   * `?name=undefined`, the API answers 404, and the service reports it as "no
-   * characters found" — the whole app empties out with no error anywhere.
-   */
+  // If this breaks, every request goes out as `?name=undefined`, the API answers
+  // 404, and the whole app shows "no characters" with no error anywhere.
   it("omits empty query params instead of sending them as blanks", async () => {
     let requestedUrl = "";
     mockApiServer.use(
