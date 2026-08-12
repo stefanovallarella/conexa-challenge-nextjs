@@ -37,7 +37,14 @@ function CharacterSectionContent({ slotId }: CharacterSectionProps) {
         onStatusChange={panel.filterByStatus}
       />
 
-      <div className="max-h-[45vh] min-h-0 flex-1 overflow-y-auto lg:max-h-[30rem]">
+      <div
+        className={cn(
+          "max-h-[45vh] min-h-0 flex-1 overflow-y-auto transition-opacity lg:max-h-[30rem]",
+          // keepPreviousData holds the old page on screen; without this the
+          // reader clicks Next and nothing seems to happen.
+          panel.isChangingPage && "opacity-60",
+        )}
+      >
         <CharacterGrid
           characters={panel.characters}
           isLoading={panel.isLoading}
@@ -56,6 +63,7 @@ function CharacterSectionContent({ slotId }: CharacterSectionProps) {
         currentPage={panel.currentPage}
         totalPages={panel.totalPages}
         onPageChange={panel.goToPage}
+        onNextPageHover={panel.prefetchNextPage}
       />
     </Panel>
   );
