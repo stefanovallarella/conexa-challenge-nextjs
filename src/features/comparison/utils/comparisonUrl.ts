@@ -7,7 +7,7 @@ export function emptyComparisonSlots(): ComparisonSlots {
   return { "1": null, "2": null };
 }
 
-export function paramNameForSlot(slotId: SlotId): string {
+function paramNameForSlot(slotId: SlotId): string {
   return `c${slotId}`;
 }
 
@@ -34,18 +34,26 @@ export function parseComparisonSlots(
   return slots;
 }
 
-export function buildComparisonQueryString(slots: ComparisonSlots): string {
-  const params = new URLSearchParams();
+/**
+ * Edits the given url rather than rebuilding it, so campaign params and the
+ * fragment survive a selection.
+ */
+export function buildComparisonUrl(
+  currentUrl: string,
+  slots: ComparisonSlots,
+): string {
+  const url = new URL(currentUrl);
 
   for (const slotId of SLOT_IDS) {
     const characterId = slots[slotId];
-    if (characterId !== null) {
-      params.set(paramNameForSlot(slotId), String(characterId));
+    if (characterId === null) {
+      url.searchParams.delete(paramNameForSlot(slotId));
+    } else {
+      url.searchParams.set(paramNameForSlot(slotId), String(characterId));
     }
   }
 
-  const queryString = params.toString();
-  return queryString ? `?${queryString}` : "";
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 export function selectedCharacterIds(slots: ComparisonSlots): number[] {
