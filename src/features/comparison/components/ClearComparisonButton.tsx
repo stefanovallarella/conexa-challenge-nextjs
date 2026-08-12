@@ -1,5 +1,6 @@
 "use client";
 
+import { CloseIcon } from "@/core/components/icons/Icons";
 import { Button } from "@/core/components/ui";
 import { SLOT_IDS } from "@/core/config/constants";
 import { useComparisonStore } from "../store/ComparisonStoreProvider";
@@ -13,7 +14,8 @@ export function ClearComparisonButton() {
   if (!hasAnySelection) return null;
 
   return (
-    <Button variant="ghost" size="sm" onClick={clearAllSlots}>
+    <Button variant="outline" size="sm" onClick={clearAllSlots}>
+      <CloseIcon className="size-3.5" />
       Clear comparison
     </Button>
   );
